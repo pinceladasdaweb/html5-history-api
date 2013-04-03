@@ -8,13 +8,18 @@
 *
 *
 * @author Pedro Rogerio
-* @version 1.0.0
+* @version 1.0.1
 */
 var History = {
 	run: function() {
-		this.content($('.nav a'));
-		this.pop();
+		if(History.detectSupport()){
+			this.content($('.nav a'));
+			this.pop();
+		}
 	},
+	detectSupport: function() {
+		return !!(window.history && history.pushState);
+    },
 	content: function(el) {
 		el.on('click', function(e){
 			e.preventDefault();
@@ -26,13 +31,13 @@ var History = {
 			$(this).parent().addClass('active')
 			
 			History.ajax(url);
-			history.pushState('', '', url);
+			history.pushState(null, document.title, url);
 		});
 	},
 	pop: function() {
 		window.onpopstate = function() {
-			var url 			= location.pathname,
-					pathArray = url.split('/');
+			var url		  = location.pathname,
+				pathArray = url.split('/');
 			
 			History.ajax(url);
 
