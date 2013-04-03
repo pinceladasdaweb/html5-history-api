@@ -19,7 +19,7 @@ var History = {
 	},
 	detectSupport: function() {
 		return !!(window.history && history.pushState);
-    },
+    	},
 	content: function(el) {
 		el.on('click', function(e){
 			e.preventDefault();
