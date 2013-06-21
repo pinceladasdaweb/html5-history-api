@@ -11,58 +11,65 @@
 * @version 1.0.1
 */
 var History = {
-	run: function() {
-		if(History.detectSupport()){
-			this.content($('.nav a'));
-			this.pop();
-		}
-	},
-	detectSupport: function() {
-		return !!(window.history && history.pushState);
-    	},
-	content: function(el) {
-		el.on('click', function(e){
-			e.preventDefault();
-			var url = $(this).attr('href');
+    run: function() {
+        if(History.detectSupport()){
+            this.content($('.nav a'));
+            this.pop();
+        }
+    },
+    detectSupport: function() {
+        return !!(window.history && history.pushState);
+    },
+    content: function(el) {
+        el.on('click', function(e){
+            e.preventDefault();
+            var url = $(this).attr('href'),
+                noProtocol = url.replace(/http[s]?:\/\//, '');
 
-			$('.placeholder').html('<div class="loading" />');
-			
-			el.parent().removeClass('active');
-			$(this).parent().addClass('active')
-			
-			History.ajax(url);
-			history.pushState(null, document.title, url);
-		});
-	},
-	pop: function() {
-		window.onpopstate = function() {
-			var url		  = location.pathname,
-				pathArray = url.split('/');
-			
-			History.ajax(url);
+            $('.placeholder').html('<div class="loading" />');
+            
+            el.parent().removeClass('active');
+            $(this).parent().addClass('active')
+            
+            History.ajax(url);
+            history.pushState(null, document.title, url);
 
-			$('.nav li').removeClass('active');
-			if(pathArray[2] == ''){
-				$('.nav li:first').addClass('active');
-			}else {
-				$('a[href="'+pathArray[2]+'"]').parent().addClass('active');
-			}
-		}
-	},
-	ajax: function(url) {
-		$.ajax({
-			url: url,
-			type: "GET",
-			dataType: "html",
-			success: function(res) {
-				$('.placeholder').remove('.loading');
-				$('.placeholder').html($(res).find('.placeholder').html());
-				document.title = $(res).filter("title").text();
-			}
-		});
-	}
+            if (typeof _gat == 'undefined') {
+                return;
+            }
+
+            _gat._getTrackerByName()._trackEvent('HTML5 History API Example', noProtocol);
+        });
+    },
+    pop: function() {
+        window.onpopstate = function() {
+            var url       = location.pathname,
+                pathArray = url.split('/');
+            
+            History.ajax(url);
+
+            $('.nav li').removeClass('active');
+            if(pathArray[2] == ''){
+                $('.nav li:first').addClass('active');
+            }else {
+                $('a[href="'+pathArray[2]+'"]').parent().addClass('active');
+            }
+        }
+    },
+    ajax: function(url) {
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+            success: function(res) {
+                $('.placeholder').remove('.loading');
+                $('.placeholder').html($(res).find('.placeholder').html());
+                document.title = $(res).filter("title").text();
+            }
+        });
+    }
 }
 
 $(function() {
-	History.run();
+    History.run();
 });
