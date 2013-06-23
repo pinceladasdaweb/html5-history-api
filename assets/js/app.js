@@ -23,8 +23,7 @@ var History = {
     content: function(el) {
         el.on('click', function(e){
             e.preventDefault();
-            var url = $(this).attr('href'),
-                noProtocol = url.replace(/http[s]?:\/\//, '');
+            var url = $(this).attr('href');
 
             $('.placeholder').html('<div class="loading" />');
             
@@ -34,11 +33,10 @@ var History = {
             History.ajax(url);
             history.pushState(null, document.title, url);
 
-            if (typeof _gat == 'undefined') {
-                return;
+            if (typeof _gaq !== "undefined" && _gaq !== null) {
+                _gaq.push(['_trackPageview', url]);
             }
 
-            _gat._getTrackerByName()._trackEvent('HTML5 History API Example', noProtocol);
         });
     },
     pop: function() {
