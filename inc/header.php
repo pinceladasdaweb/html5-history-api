@@ -4,36 +4,12 @@
     <div class="navbar-inner">
       <div class="container">
         <ul class="nav">
-          <?php if ($page == 'home') {?>
-          <li class="active"><a href="index">Home</a></li>
-          <?php } else { ?>
-          <li><a href="index">Home</a></li>
-          <?php } ?>
-          <?php if ($page == 'projects') {?>
-          <li class="active"><a href="projects">Projects</a></li>
-          <?php } else { ?>
-          <li><a href="projects">Projects</a></li>
-          <?php } ?>
-          <?php if ($page == 'services') {?>
-          <li class="active"><a href="services">Services</a></li>
-          <?php } else { ?>
-          <li><a href="services">Services</a></li>
-          <?php } ?>
-          <?php if ($page == 'downloads') {?>
-          <li class="active"><a href="downloads">Downloads</a></li>
-          <?php } else { ?>
-          <li><a href="downloads">Downloads</a></li>
-          <?php } ?>
-          <?php if ($page == 'about') {?>
-          <li class="active"><a href="about">About</a></li>
-          <?php } else { ?>
-          <li><a href="about">About</a></li>
-          <?php } ?>
-          <?php if ($page == 'contact') {?>
-          <li class="active"><a href="contact">Contact</a></li>
-          <?php } else { ?>
-          <li><a href="contact">Contact</a></li>
-          <?php } ?>
+          <li <?php echo ($page == 'home') ? "class='active'" : ""; ?>><a href="index">Home</a></li>
+          <li <?php echo ($page == 'projects') ? "class='active'" : ""; ?>><a href="projects">Projects</a></li>
+          <li <?php echo ($page == 'services') ? "class='active'" : ""; ?>><a href="services">Services</a></li>
+          <li <?php echo ($page == 'downloads') ? "class='active'" : ""; ?>><a href="downloads">Downloads</a></li>
+          <li <?php echo ($page == 'about') ? "class='active'" : ""; ?>><a href="about">About</a></li>
+          <li <?php echo ($page == 'contact') ? "class='active'" : ""; ?>><a href="contact">Contact</a></li>
         </ul>
       </div>
     </div>
